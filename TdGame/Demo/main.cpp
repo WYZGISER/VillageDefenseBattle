@@ -74,7 +74,8 @@ int main() {
 		SDL_RenderCopy(renderer, tex_img, nullptr, &rect_img);
 		filledCircleRGBA(renderer, pos_cursor.x, pos_cursor.y, 50, 255, 0, 0, 125);
 		SDL_RenderCopy(renderer, tex_text, nullptr, &rect_text);
-		SDL_RenderPresent(renderer);
+
+		SDL_RenderPresent(renderer); 
 	}
 
 	return 0;
