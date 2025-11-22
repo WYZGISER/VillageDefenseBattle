@@ -1,12 +1,74 @@
 #define SDL_MAIN_HANDLED
-
+#include<string>
+#include<fstream>
+#include<sstream>
 #include<iostream>
+
+#include<cJSON.h>
 #include<SDL.h>
 #include<SDL_image.h>
 #include<SDL_mixer.h>
 #include<SDL_ttf.h>
 #include<SDL2_gfxPrimitives.h>
+void test_json()
+{
+	std::ifstream file("test.json");
+	if (!file.good())
+	{
+		std::cout << "无法打开文件" << std::endl;
+		return;
+	}
+
+	std::stringstream str_stream;
+	str_stream << file.rdbuf();
+	file.close();
+
+	cJSON* json_root = cJSON_Parse(str_stream.str().c_str());
+
+	cJSON* json_name = cJSON_GetObjectItem(json_root, "name");
+	cJSON* json_age = cJSON_GetObjectItem(json_root, "age");
+	cJSON* json_pets = cJSON_GetObjectItem(json_root, "pets");
+
+	std::cout << json_name->string << ":" << json_name->valuestring << std::endl;
+	std::cout << json_age->string << ":" << json_age->valueint << std::endl;
+	std::cout << json_pets->string << ":"<< std::endl;
+
+	cJSON* json_item = nullptr;
+	cJSON_ArrayForEach(json_item, json_pets)
+	{
+		std::cout << "\t" << json_item->valuestring << std::endl;
+	}
+}
+
+void test_csv()
+{
+	std::ifstream file("test.csv");
+	if (!file.good())
+	{
+		std::cout << "无法打开文件" << std::endl;
+		return;
+	}
+	std::string str_line;
+	while (std::getline(file,str_line))
+	{
+		std::string str_gird;
+		std::stringstream str_stream(str_line);
+		while (std::getline(str_stream,str_gird,','))
+		{
+			std::cout << str_gird << " ";
+		}
+
+		std::cout << std::endl;
+	}
+
+	file.close();
+}
+
 int main() {
+
+	test_json();
+	std::cout << std::endl;
+	test_csv();
 
 	//初始化
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -21,7 +83,7 @@ int main() {
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	//图片
-	SDL_Surface* suf_img = IMG_Load("avatar.jpg");//把硬盘上的文件加载到内存中
+	SDL_Surface* suf_img = IMG_Load("avatar.jpg");
 	SDL_Texture* tex_img = SDL_CreateTextureFromSurface(renderer, suf_img);
 
 	//字体
@@ -39,7 +101,7 @@ int main() {
 
 	bool isquit = false;
 	SDL_Event event;
-	SDL_Point pos_cursor = { 0,0 };//记录鼠标的位置
+	SDL_Point pos_cursor = { 0,0 };
 	SDL_Rect rect_img,rect_text;
 	Uint64 last_counter = SDL_GetPerformanceCounter();
 	Uint64 counter_fred = SDL_GetPerformanceFrequency();
