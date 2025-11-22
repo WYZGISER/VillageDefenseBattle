@@ -34,10 +34,16 @@ int main() {
 	Mix_Music* music = Mix_LoadMUS("music.mp3");
 	Mix_FadeInMusic(music, -1, 1500);
 
+	//动态延时
+	int fps = 60;
+
 	bool isquit = false;
 	SDL_Event event;
 	SDL_Point pos_cursor = { 0,0 };//记录鼠标的位置
 	SDL_Rect rect_img,rect_text;
+	Uint64 last_counter = SDL_GetPerformanceCounter();
+	Uint64 counter_fred = SDL_GetPerformanceFrequency();
+
 	rect_img.w = suf_img->w;
 	rect_img.h = suf_img->h;
 
@@ -58,6 +64,14 @@ int main() {
 				pos_cursor.x = event.motion.x;
 				pos_cursor.y = event.motion.y;
 			}
+		}
+
+		Uint64 current_counter = SDL_GetPerformanceCounter();
+		double delta = (double)(current_counter - last_counter) / counter_fred;
+		last_counter = current_counter;
+		if (delta * 1000 < 1000.0 /60)
+		{
+			SDL_Delay((Uint32)(1000.0 / 60 - delta * 1000));
 		}
 
 		//处理数据
