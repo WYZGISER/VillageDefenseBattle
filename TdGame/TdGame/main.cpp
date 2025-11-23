@@ -1,13 +1,10 @@
+#define SDL_MAIN_HANDLED
 #include<iostream>
 
-#include "manager.h"
 #include "game_manager.h"
 
-int main() {
+int main(int argc,char** argv) {
 	
-	GameManager* instance = GameManager::instance();
-	 
-
-	std::cout << "hello World" << std::endl;
-	return 0;
+	return GameManager::instance()->run(argc, argv);
+	
 }
