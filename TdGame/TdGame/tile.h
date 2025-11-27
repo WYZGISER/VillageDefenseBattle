@@ -17,6 +17,7 @@ struct Tile {
 	int decoration = -1;
 	int special_flag = -1;
 	Direaction direction = Direaction::None;
+	bool has_tower = false;
 };
 
 typedef std::vector<std::vector<Tile>> TileMap;
