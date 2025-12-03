@@ -90,7 +90,7 @@ enum class ResID
 	Font_Main
 };
 
-class ResourcesManager:Manager<ResourcesManager>
+class ResourcesManager:public Manager<ResourcesManager>
 {
 	friend class Manager<ResourcesManager>;//POOL
 public:

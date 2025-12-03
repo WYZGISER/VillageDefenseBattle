@@ -5,7 +5,7 @@
 
 #define SIZE_TILE 48
 struct Tile {
-	enum class Direaction
+	enum class Direction
 	{
 		None = 0,
 		Up,
@@ -16,7 +16,7 @@ struct Tile {
 	int terrian = 0;
 	int decoration = -1;
 	int special_flag = -1;
-	Direaction direction = Direaction::None;
+	Direction direction = Direction::None;
 	bool has_tower = false;
 };
 
