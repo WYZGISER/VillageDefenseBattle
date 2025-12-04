@@ -8,7 +8,7 @@ public:
 	Timer() = default;
 	~Timer() = default;
 
-	void resert()
+	void restart()
 	{
 		pass_time = 0;
 		shotted = false;
