@@ -1,6 +1,7 @@
 #ifndef _VECTOR2_H_
 #define _VECTOR2_H_
 
+#include<cmath>
 class Vector2
 {
 public:
@@ -51,7 +52,32 @@ public:
 
 	bool operator>(const Vector2& vec)const
 	{
+		return length() > vec.length();
+	}
 
+	bool operator<(const Vector2& vec)const
+	{
+		return length() < vec.length();
+	}
+
+	double length()const
+	{
+		return sqrt(x * x + y * y);
+	}
+
+	Vector2 normalize() const
+	{
+		double len;
+
+		if (len == 0)
+			return Vector2(0, 0);
+
+		return Vector2(x / len, y / len);
+	}
+
+	bool apprcx_zero() const
+	{
+		return length() < 0.00001;
 	}
 public:
 	double x = 0;
